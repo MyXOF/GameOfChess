@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 
 
@@ -51,6 +53,60 @@ public class MainActivity extends ActionBarActivity {
     	gameconfig = new GameConf(8,8,1,1,6,6);
     	gameview = (GameView) findViewById(R.id.gameview);
     	
+    	gamecontrol = new GameControlImpl(gameconfig);
+    	gameview.setGameControl(gamecontrol);
+    	
+    	StartButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				StartChessGame();
+				
+			}
+		});
+    	
+    	EndButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				EndChessGame();
+				
+			}
+		});
+    	
+    	this.gameview.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				if(!isPlaying){
+					return false;
+				}
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					gameViewTouchDown(event);
+				}
+				if(event.getAction() == MotionEvent.ACTION_UP){
+					gameViewTouchUp(event);
+				}
+				return true;
+			}
+		});
+    }
+    
+    private void gameViewTouchDown(MotionEvent event) {
+    	Piece[][] pieces = gamecontrol.getPieces();
+    	float touchX = event.getX();
+    	float touchY = event.getY();
+    	Piece currentPiece = gamecontrol.findPiece(touchX, touchY);
+    	if(currentPiece == null){
+    		return;
+    	}
+		
+	}
+    
+    private void gameViewTouchUp(MotionEvent event){
     	
     }
     
