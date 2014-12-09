@@ -1,6 +1,9 @@
 package com.example.chessgame;
 
 public class GameConf {
+	private int PIC_WIDTH;
+	private int PIC_HEIGHT;
+	
 	private int row;
 	private int col;
 	private int m_heroPosX;
@@ -67,5 +70,27 @@ public class GameConf {
 
 	public void setE_heroPosY(int e_heroPosY) {
 		this.e_heroPosY = e_heroPosY;
+	}
+
+
+
+
+	public int getPIC_WIDTH() {
+		return PIC_WIDTH;
+	}
+
+	public void setPIC_WIDTH(int pIC_WIDTH) {
+		PIC_WIDTH = pIC_WIDTH;
+	}
+
+	public int getPIC_HEIGHT() {
+		return PIC_HEIGHT;
+	}
+
+
+
+
+	public void setPIC_HEIGHT(int pIC_HEIGHT) {
+		PIC_HEIGHT = pIC_HEIGHT;
 	}
 }

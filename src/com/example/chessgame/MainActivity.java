@@ -16,6 +16,9 @@ public class MainActivity extends ActionBarActivity {
 	private GameView gameview;
 	private Button StartButton;
 	private Button EndButton;
+	
+
+	
 	private boolean isPlaying;
 	private int pieceChoosen;
 	private Piece selected = null;
@@ -96,22 +99,74 @@ public class MainActivity extends ActionBarActivity {
     }
     
     private void gameViewTouchDown(MotionEvent event) {
-    	Piece[][] pieces = gamecontrol.getPieces();
+    	int turn = gamecontrol.getTurn();
+    	Hero currentHero;
+    	Hero enemy;
+    	if(turn == 1){
+    		currentHero = gamecontrol.getM_hero();
+    		enemy = gamecontrol.getE_hero();
+    	}
+    	else{
+    		currentHero = gamecontrol.getE_hero();
+    		enemy = gamecontrol.getM_hero();
+    	}
+    	
     	float touchX = event.getX();
     	float touchY = event.getY();
     	Piece currentPiece = gamecontrol.findPiece(touchX, touchY);
     	if(currentPiece == null){
     		return;
     	}
+    	else if(currentPiece.getFlag() == turn){
+    		return;
+    	}
+    	else if(currentPiece.getFlag() == 0){
+    		if(MoveMethod(currentHero,currentPiece,turn)){
+    			gamecontrol.setTurn(3-turn);
+    		}
+    	}
+    	else if(currentPiece.getFlag() == (3-turn)){
+    		if(AttackMethod(currentHero, currentPiece,enemy)){
+    			gamecontrol.setTurn(3-turn);
+    		}
+    	}
 		
 	}
     
+    private Boolean MoveMethod(Hero hero,Piece piece,int turn){
+    	if(calaLength(hero.getPosX(), hero.getPosY(), piece.getIndexX(), piece.getIndexY()) <= hero.getMove_range()){
+    		Piece[][] pieces = gamecontrol.getPieces();
+    		pieces[hero.getPosX()][hero.getPosY()].setFlag(0);
+    		pieces[piece.getIndexX()][piece.getIndexY()].setFlag(turn);
+    		hero.setPosX(piece.getIndexX());
+    		hero.setPosY(piece.getIndexY());
+    		return true;
+    	}
+    	else{ 
+    		return false;
+    	}
+    }
+    
+    private Boolean AttackMethod(Hero hero,Piece piece,Hero attackedHero){
+    	if(calaLength(hero.getPosX(), hero.getPosY(), piece.getIndexX(), piece.getIndexY()) <= hero.getAttack_range()){
+    		attackedHero.Damage(hero.getAttack());
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
+    }
+    
+    public int calaLength(int x1,int y1,int x2,int y2){
+    	return(Math.abs(x1-x2)+Math.abs(y1-y2));
+    }
+    
     private void gameViewTouchUp(MotionEvent event){
-    	
+    	this.gameview.postInvalidate();
     }
     
     public void StartChessGame(){
-    	
+    	gameview.StartGame();
     }
     
     public void EndChessGame(){

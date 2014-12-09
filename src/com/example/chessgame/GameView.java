@@ -48,4 +48,12 @@ public class GameView extends View{
 		this.gameControl = gameControl;
 	}
 
+	public Piece getSelectedPiece() {
+		return selectedPiece;
+	}
+
+	public void setSelectedPiece(Piece selectedPiece) {
+		this.selectedPiece = selectedPiece;
+	}
+
 }

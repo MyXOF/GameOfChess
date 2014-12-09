@@ -8,6 +8,7 @@ public class Hero {
 	private int posX;
 	private int posY;
 	private int attack_range;
+	private int move_range;
 
 	Hero() { 
 		this.setAttack(100);
@@ -20,6 +21,10 @@ public class Hero {
 		this.setAttack(a);
 		this.setDefence(d);
 		this.setName(s);
+	}
+	
+	public void Damage(int damage){
+		return;
 	}
 
 	public int getHealth() {
@@ -76,6 +81,14 @@ public class Hero {
 
 	public void setAttack_range(int attack_range) {
 		this.attack_range = attack_range;
+	}
+
+	public int getMove_range() {
+		return move_range;
+	}
+
+	public void setMove_range(int move_range) {
+		this.move_range = move_range;
 	}
 
 }
