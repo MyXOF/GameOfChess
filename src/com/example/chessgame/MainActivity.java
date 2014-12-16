@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
-        static ImageView[][] g_gameView = new ImageView[10][10];
+       
 	private GameConf gameconfig;
 	private GameControl gamecontrol;
 	private GameView gameview;
@@ -35,30 +35,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_main);
-	GenerateTable();                       //生成ImageView数组.
+	gameview.GenerateTable(this);                       //生成ImageView数组.
         init();
     }
 
-    public void GenerateTable() {
-        float scale;
-        int iHeight;
-        int iWidth;
-        TableLayout gameView = (TableLayout)findViewById(R.id.GameView);
-        scale = this.getResources().getDisplayMetrics().widthPixels;  
-        iHeight = iWidth = (int) (scale / 9);
-        for(int i = 0; i < 9; i++) {
-        	TableRow row = new TableRow(this);
-        	for(int j = 0; j < 9; j++) {
-        		g_gameView[i][j] = new ImageView(this);
-        		g_gameView[i][j].setMaxHeight(iHeight);
-        		g_gameView[i][j].setMaxWidth(iWidth);
-        		g_gameView[i][j].setAdjustViewBounds(true);
-        		g_gameView[i][j].setImageResource(R.drawable.range);
-        		row.addView(g_gameView[i][j]);
-        	}
-            gameView.addView(row);
-        }
-    }
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
