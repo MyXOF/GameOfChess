@@ -35,43 +35,30 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_main);
-	float scale;
+	GenerateTable();                       //生成ImageView数组.
+        init();
+    }
+
+    public void GenerateTable() {
+        float scale;
         int iHeight;
         int iWidth;
         TableLayout gameView = (TableLayout)findViewById(R.id.GameView);
         scale = this.getResources().getDisplayMetrics().widthPixels;  
         iHeight = iWidth = (int) (scale / 9);
-        //iHeight = iWidth = 80;
-        //Toast.makeText(getApplicationContext(), "iHeight = " + iHeight,Toast.LENGTH_SHORT).show();
-        //Toast.makeText(getApplicationContext(), "scale = " + scale,Toast.LENGTH_SHORT).show();
         for(int i = 0; i < 9; i++) {
         	TableRow row = new TableRow(this);
-        	//row.setLayoutParams(new LayoutParams(20, 20));
         	for(int j = 0; j < 9; j++) {
         		g_gameView[i][j] = new ImageView(this);
         		g_gameView[i][j].setMaxHeight(iHeight);
         		g_gameView[i][j].setMaxWidth(iWidth);
         		g_gameView[i][j].setAdjustViewBounds(true);
-        		/*if(i == 0)
-        			g_gameView[i][j].setMaxHeight(20);
-        		if(j == 0)
-        			g_gameView[i][j].setMaxWidth(20);*/
-        		g_gameView[i][j].setImageResource(R.drawable.blank);
-        		//g_gameView[i][j].setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        		//g_gameView[i][j].setLayoutParams(new LayoutParams(20, 20));
-        		//g_gameView[i][j].setVisibility(1);
-        		//g_gameView[i][j].setMinimumHeight(10);
-        		//row.addView(g_gameView[i][j],new LayoutParams(20, 20));
+        		g_gameView[i][j].setImageResource(R.drawable.range);
         		row.addView(g_gameView[i][j]);
         	}
-        	//scale = this.getResources().getDisplayMetrics().density;  
-            //iHeight = iWidth = (int) (80 / scale + 0.5f);
-        	//gameView.addView(row,new LayoutParams(LayoutParams.WRAP_CONTENT, 20));
             gameView.addView(row);
         }
-        init();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
