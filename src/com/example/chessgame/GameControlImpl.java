@@ -29,6 +29,7 @@ public class GameControlImpl implements GameControl{
 		return this.pieces;
 	}
 	
+	
 	@Override
 	public Piece findPiece(float touchX,float touchY){
 		int relativeX = (int)touchX;

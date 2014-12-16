@@ -7,7 +7,7 @@ public class Piece{
 	private int indexY;
 	private int posX;
 	private int posY;
-	private int flag;
+	private int flag;  // «”¢–€”Î∑Ò
 	private Bitmap imgBitmap;
 	
 	Piece(int x,int y,int px,int py){
