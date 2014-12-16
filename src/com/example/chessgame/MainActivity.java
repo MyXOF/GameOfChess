@@ -39,8 +39,8 @@ public class MainActivity extends ActionBarActivity {
         int iHeight;
         int iWidth;
         TableLayout gameView = (TableLayout)findViewById(R.id.GameView);
-        //scale = this.getResources().getDisplayMetrics().heightPixels;  
-        //iHeight = iWidth = (int) (80 / scale + 0.5f);
+        scale = this.getResources().getDisplayMetrics().widthPixels;  
+        iHeight = iWidth = (int) (scale / 9);
         //iHeight = iWidth = 80;
         //Toast.makeText(getApplicationContext(), "iHeight = " + iHeight,Toast.LENGTH_SHORT).show();
         //Toast.makeText(getApplicationContext(), "scale = " + scale,Toast.LENGTH_SHORT).show();
@@ -49,8 +49,8 @@ public class MainActivity extends ActionBarActivity {
         	//row.setLayoutParams(new LayoutParams(20, 20));
         	for(int j = 0; j < 9; j++) {
         		g_gameView[i][j] = new ImageView(this);
-        		g_gameView[i][j].setMaxHeight(120);
-        		g_gameView[i][j].setMaxWidth(120);
+        		g_gameView[i][j].setMaxHeight(iHeight);
+        		g_gameView[i][j].setMaxWidth(iWidth);
         		g_gameView[i][j].setAdjustViewBounds(true);
         		/*if(i == 0)
         			g_gameView[i][j].setMaxHeight(20);
