@@ -1,14 +1,16 @@
 package com.example.chessgame;
 
-import android.graphics.Bitmap;
-
 public class Piece{
 	private int indexX;
 	private int indexY;
 	private int posX;
 	private int posY;
-	private int flag;  // «”¢–€”Î∑Ò
-	private Bitmap imgBitmap;
+	private int flag;
+
+	Piece() {
+		// TODO Auto-generated constructor stub
+		this.flag = 0;
+	}
 	
 	Piece(int x,int y,int px,int py){
 		this.setIndexX(x);
@@ -57,11 +59,5 @@ public class Piece{
 		this.flag = flag;
 	}
 
-	public Bitmap getImgBitmap() {
-		return imgBitmap;
-	}
 
-	public void setImgBitmap(Bitmap imgBitmap) {
-		this.imgBitmap = imgBitmap;
-	}
 }

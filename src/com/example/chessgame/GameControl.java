@@ -11,6 +11,13 @@ public interface GameControl {
 	void setM_hero(Hero m_hero);
 	Hero getE_hero();
 	void setE_hero(Hero e_hero);
+	int GetRow();
+	int GetCol();
+	GameConf GetConfig();
+	void ResetAll(GameConf conf) ;
+	void ResetAllPieces();
+	void ResetHeros(GameConf conf);
+	void GenerateAllPieces();
 }
 
 

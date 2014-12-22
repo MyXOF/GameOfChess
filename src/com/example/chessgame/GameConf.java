@@ -1,27 +1,54 @@
 package com.example.chessgame;
 
+
+
 public class GameConf {
 	private int PIC_WIDTH;
 	private int PIC_HEIGHT;
 	
 	private int row;
 	private int col;
-	private int m_heroPosX;
-	private int m_heroPosY;
-	private int e_heroPosX;
-	private int e_heroPosY;
+
+	private Hero m_hero;
+	private Hero e_hero;
 	
-	public GameConf(int m_row,int m_col,int m_X,int m_Y,int e_X,int e_Y) {
+	public GameConf() {
 		// TODO Auto-generated constructor stub
-		this.setRow(m_row);
-		this.setCol(m_col);
-		this.setM_heroPosX(m_X);
-		this.setM_heroPosY(m_Y);
-		this.setE_heroPosX(e_X);
-		this.setE_heroPosY(e_Y);
+		this.setRow(12);
+		this.setCol(12);
+		m_hero = new Hero();
+		e_hero = new Hero();
+		SetMyHero();
+		SetEnemyHero();
 	}
 	
+
 	
+	public void SetMyHero() {
+		m_hero.setName("Light");
+		m_hero.setAttack(10);
+		m_hero.setAttack_range(2);
+		m_hero.setDefence(5);
+		m_hero.setHealth(10);
+		m_hero.setMove_range(3);
+		m_hero.setPosX(1);
+		m_hero.setPosY(1);
+		m_hero.setDeath(false);
+	}
+	
+	public void SetEnemyHero(){
+		e_hero.setName("Dark");
+		e_hero.setAttack(20);
+		e_hero.setAttack_range(1);
+		e_hero.setDefence(5);
+		e_hero.setHealth(15);
+		e_hero.setMove_range(2);
+		e_hero.setPosX(10);
+		e_hero.setPosY(10);
+		e_hero.setDeath(false);
+	}
+	
+
 	
 
 	public int getRow() {
@@ -40,40 +67,6 @@ public class GameConf {
 		this.col = col;
 	}
 
-	public int getM_heroPosX() {
-		return m_heroPosX;
-	}
-
-	public void setM_heroPosX(int m_heroPosX) {
-		this.m_heroPosX = m_heroPosX;
-	}
-
-	public int getM_heroPosY() {
-		return m_heroPosY;
-	}
-
-	public void setM_heroPosY(int m_heroPosY) {
-		this.m_heroPosY = m_heroPosY;
-	}
-
-	public int getE_heroPosX() {
-		return e_heroPosX;
-	}
-
-	public void setE_heroPosX(int e_heroPosX) {
-		this.e_heroPosX = e_heroPosX;
-	}
-
-	public int getE_heroPosY() {
-		return e_heroPosY;
-	}
-
-	public void setE_heroPosY(int e_heroPosY) {
-		this.e_heroPosY = e_heroPosY;
-	}
-
-
-
 
 	public int getPIC_WIDTH() {
 		return PIC_WIDTH;
@@ -86,11 +79,16 @@ public class GameConf {
 	public int getPIC_HEIGHT() {
 		return PIC_HEIGHT;
 	}
-
-
-
-
 	public void setPIC_HEIGHT(int pIC_HEIGHT) {
 		PIC_HEIGHT = pIC_HEIGHT;
+	}
+	
+	public Hero getM_Hero() {
+		return m_hero;
+	}
+	
+	public Hero getE_hero() {
+		return e_hero;
+		
 	}
 }

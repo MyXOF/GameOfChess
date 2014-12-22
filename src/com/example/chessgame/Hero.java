@@ -9,22 +9,32 @@ public class Hero {
 	private int posY;
 	private int attack_range;
 	private int move_range;
+	private boolean isDead;
 
 	Hero() { 
-		this.setAttack(100);
-		this.setDefence(100);
-		this.setName("Default");
+		isDead = false;
 	}
 
-	Hero(int h, int a, int d, String s) {
-		this.setHealth(h);
-		this.setAttack(a);
-		this.setDefence(d);
-		this.setName(s);
-	}
 	
 	public void Damage(int damage){
+		int hurt = damage - defence;
+		if(hurt <= 0){
+			hurt = 0;
+		}
+		health = health -hurt;
+		if(health <= 0){
+			health = 0;
+			isDead = true;
+		}
 		return;
+	}
+	
+	public Boolean isDead() {
+		return isDead;
+	}
+	
+	public void setDeath(boolean flag) {
+		isDead = flag;
 	}
 
 	public int getHealth() {

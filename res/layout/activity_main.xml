@@ -1,13 +1,87 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/GameView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/map"
+
     tools:context="com.example.chessgame.MainActivity" >
 
-</TableLayout>
+	<TableLayout 
+	    android:id="@+id/GameView"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+
+	    android:background="@drawable/map"
+	    tools:context="com.example.chessgame.MainActivity" >
+
+	</TableLayout>
+	    
+	<LinearLayout
+	    android:id="@+id/M_Hero"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/GameView"
+	    android:layout_marginLeft="20dp"
+	    android:layout_marginTop="20dp" >
+
+			<TextView 
+			    android:id="@+id/M_HeroName"
+			    android:layout_width="40dp"
+			    android:layout_height="wrap_content"
+			    android:text=""/>
+
+			<TextView
+			    android:id="@+id/M_HeroHP"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="20dp"
+			    android:text="" />
+
+	</LinearLayout> 
+	
+	<LinearLayout
+	    android:id="@+id/E_Hero"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/M_Hero"
+	    android:layout_marginLeft="20dp"
+	    android:layout_marginTop="20dp" >
+
+			<TextView 
+			    android:id="@+id/E_HeroName"
+			    android:layout_width="40dp"
+			    android:layout_height="wrap_content"
+			    android:text=""/>
+			<TextView 
+			   	android:id="@+id/E_HeroHP"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="20dp"
+			    android:text=""/>
+	</LinearLayout> 	
+
+	<Button
+	    android:id="@+id/StartButton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentLeft="true"
+	    android:text="Start Game" />
+
+	<Button
+	    android:id="@+id/EndButton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentRight="true"
+	    android:text="Exit" />
+
+	<Button
+	    android:id="@+id/Replay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_marginLeft="31dp"
+	    android:layout_toRightOf="@+id/StartButton"
+	    android:text="Replay" />
+		
+</RelativeLayout>

@@ -1,45 +1,48 @@
 package com.example.chessgame;
 
 import android.support.v7.app.ActionBarActivity;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.Toast;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
-       
 	private GameConf gameconfig;
 	private GameControl gamecontrol;
 	private GameView gameview;
 	private Button StartButton;
 	private Button EndButton;
-	
+	private Button ReplayButton;
+	private TableLayout tableView;
 
+	private TextView m_HeroName;
+	private TextView e_HeroName;
+	private TextView m_HeroHP;
+	private TextView e_HeroHP;
+	
+	
 	
 	private boolean isPlaying;
-	private int pieceChoosen;
-	private Piece selected = null;
+	//private Piece selected = null;
 	private AlertDialog.Builder winDialog;
 	private AlertDialog.Builder lostDialog;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-	setContentView(R.layout.activity_main);
-	gameview.GenerateTable(this);                       //生成ImageView数组.
+        setContentView(R.layout.activity_main);
+        
         init();
     }
 
-    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,12 +63,10 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     
-    public void init(){
-    	gameconfig = new GameConf(8,8,1,1,6,6);
-    	gameview = (GameView) findViewById(R.id.gameview);
-    	
-    	gamecontrol = new GameControlImpl(gameconfig);
-    	gameview.setGameControl(gamecontrol);
+    @SuppressLint("ClickableViewAccessibility")
+	public void init(){
+
+    	InitArgumentsAll();    	
     	
     	StartButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -87,7 +88,16 @@ public class MainActivity extends ActionBarActivity {
 			}
 		});
     	
-    	this.gameview.setOnTouchListener(new View.OnTouchListener() {
+    	ReplayButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Replay();
+			}
+		});
+    	
+    	this.tableView.setOnTouchListener(new View.OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -97,14 +107,85 @@ public class MainActivity extends ActionBarActivity {
 				}
 				if(event.getAction() == MotionEvent.ACTION_DOWN){
 					gameViewTouchDown(event);
+					gameview.UpdateAppearance();
+					ShowHeroInfo();
+					isGameOver();
 				}
 				if(event.getAction() == MotionEvent.ACTION_UP){
 					gameViewTouchUp(event);
 				}
+				
 				return true;
 			}
 		});
+    
+    	winDialog = createDialog("Success", "You win! Play again!", 
+    								R.drawable.win);
+
+    	winDialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				isPlaying = false;
+				return;
+			}
+		});
+    	winDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				Replay();
+			}
+		});
+    	
+    	lostDialog = createDialog("Lost", "You Lose! Play again!", R.drawable.lose);
+
+    	
+    	lostDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				isPlaying = false;
+				return;
+			}
+		});
+    	lostDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				Replay();
+			}
+		});
     }
+    
+    private void InitArgumentsAll() {
+    	tableView = (TableLayout)findViewById(R.id.GameView);
+    	SetGameConfig();  	
+    	
+    	gameview = new GameView(this,gamecontrol,tableView);
+    	
+    	StartButton = (Button) this.findViewById(R.id.StartButton);
+    	EndButton = (Button) this.findViewById(R.id.EndButton);
+    	ReplayButton = (Button) this.findViewById(R.id.Replay);
+    	
+    	m_HeroName = (TextView) this.findViewById(R.id.M_HeroName);
+    	e_HeroName = (TextView) this.findViewById(R.id.E_HeroName);
+    	m_HeroHP = (TextView) this.findViewById(R.id.M_HeroHP);
+    	e_HeroHP = (TextView) this.findViewById(R.id.E_HeroHP);
+	}
+    
+    private void SetGameConfig(){
+    	gameconfig = new GameConf();  
+    	gamecontrol = new GameControlImpl(gameconfig);
+    }
+    
+    private void gameViewTouchUp(MotionEvent event) {
+		
+	}
     
     private void gameViewTouchDown(MotionEvent event) {
     	int turn = gamecontrol.getTurn();
@@ -168,16 +249,65 @@ public class MainActivity extends ActionBarActivity {
     public int calaLength(int x1,int y1,int x2,int y2){
     	return(Math.abs(x1-x2)+Math.abs(y1-y2));
     }
+   
     
-    private void gameViewTouchUp(MotionEvent event){
-    	this.gameview.postInvalidate();
-    }
-    
-    public void StartChessGame(){
-    	gameview.StartGame();
-    }
+    public void StartChessGame() {
+    	if(isPlaying){
+    		return;
+    	}
+		isPlaying = true;
+		this.gameview.UpdateAppearance();
+		ShowHeroInfo();
+	}
     
     public void EndChessGame(){
-    	
+    	System.exit(0);
+    }
+    
+    public void Replay() {
+		ResetAll();
+	}
+    
+    public void ResetAll() {
+		isPlaying = true;
+		gameview.ResetTable();
+		gameconfig.SetMyHero();
+		gameconfig.SetEnemyHero();
+		gamecontrol.ResetAll(gameconfig);
+		this.gameview.UpdateAppearance();
+		ShowHeroInfo();
+	}
+    
+    public void ShowHeroInfo(){
+		String m_Name,e_Name;
+		String m_HP,e_HP;
+		
+		m_Name = gamecontrol.getM_hero().getName();
+		m_HP = "HP:"+gamecontrol.getM_hero().getHealth();
+		e_Name = gamecontrol.getE_hero().getName();
+		e_HP = "HP:"+gamecontrol.getE_hero().getHealth();
+		
+		m_HeroName.setText(m_Name);
+		e_HeroName.setText(e_Name);
+		
+		m_HeroHP.setText(m_HP);
+		e_HeroHP.setText(e_HP);
+    }
+    
+    private void isGameOver(){
+    	if(gamecontrol.getM_hero().isDead()){
+    		this.lostDialog.show();
+    		isPlaying = false;
+    		return;
+    	}
+    	if(gamecontrol.getE_hero().isDead()){
+    		this.winDialog.show();
+    		isPlaying = false;
+    		return;
+    	}
+    }
+    
+    private AlertDialog.Builder createDialog(String title,String message,int image){
+    	return new AlertDialog.Builder(this).setTitle(title).setMessage(message).setIcon(image);
     }
 }
